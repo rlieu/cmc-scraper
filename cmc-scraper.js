@@ -37,16 +37,22 @@ request("https://coinmarketcap.com/all/views/all/", function(error, response, ht
 
 // function getLogo(url) {
 //   request(url, function(error, response, html) {
+//     let logo = "";
+//     if(html) {
 //       const $ = cheerio.load(html);
-//       const logo = $("img.logo-32x32").attr("src");
-//       return logo;
+//       logo = $("img.logo-32x32").attr("src");
+//     }
+//     return logo;
 //   });
 // }
 
 // function getLink(url) {
 //   request(url, function(error, response, html) {
+//     let link = "";
+//     if(html) {
 //       const $ = cheerio.load(html);
 //       const link = $("ul.list-unstyled.details-panel-item--links").find("a").attr("href");
-//       return link;
+//     }
+//     return link;
 //   });
 // }
