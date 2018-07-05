@@ -6,7 +6,7 @@ module.exports = function(url) {
         let link = "";
         if(html) {
             const $ = cheerio.load(html);
-            const link = $("ul.list-unstyled.details-panel-item--links").find("a").attr("href");
+            link = $("ul.list-unstyled.details-panel-item--links").find("a").attr("href");
         }
         return link;
     });
