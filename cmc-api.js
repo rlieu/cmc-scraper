@@ -15,14 +15,7 @@ request("https://api.coinmarketcap.com/v2/ticker/", function(error, response, bo
             const logo = `https://s2.coinmarketcap.com/static/img/coins/32x32/${data.data[i].id}.png`;
 
             const getLink = new Promise(function(resolve, reject) {
-                request(url, function(error, response, html) {
-                    let link = "";
-                    if(html) {
-                        const $ = cheerio.load(html);
-                        link = $("ul.list-unstyled.details-panel-item--links").find("a").attr("href");
-                    }
-                    resolve(link);
-                });
+                const link = getlink(resolve, url);
             })
 
             getLink.then(function(link){
@@ -43,14 +36,13 @@ request("https://api.coinmarketcap.com/v2/ticker/", function(error, response, bo
     });
 });
 
-// function getLink(url) {
-//     request(url, function(error, response, html) {
-//         let link = "";
-//         if(html) {
-//             const $ = cheerio.load(html);
-//             link = $("ul.list-unstyled.details-panel-item--links").find("a").attr("href");
-//         }
-//         console.log(link);
-//         return link;
-//     });
-// }
+function getlink(resolve, url) {
+    request(url, function(error, response, html) {
+        let link = "";
+        if(html) {
+            const $ = cheerio.load(html);
+            link = $("ul.list-unstyled.details-panel-item--links").find("a").attr("href");
+        }
+        resolve(link);
+    });
+}
