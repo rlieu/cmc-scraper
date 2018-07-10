@@ -16,7 +16,7 @@ firebase.initializeApp(config);
 const db = firebase.firestore();
 
 // set start <= # of tokens on coinmarketcap
-for(var start = 1; start <= 1615; start += 100) {
+for(var start = 1; start <= 100; start += 100) {
 
     request(`https://api.coinmarketcap.com/v2/ticker/?start=${start}`, function(error, response, body) {
         const data = JSON.parse(body);
@@ -36,6 +36,7 @@ for(var start = 1; start <= 1615; start += 100) {
 
                 getLink.then(function(link){
                     result = {
+                        id: "",
                         name: name,
                         symbol: symbol,
                         rank: rank,
