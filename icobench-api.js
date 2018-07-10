@@ -14,8 +14,13 @@ request("https://icobench.com/api/v1/icos/all", function(error, response, body) 
             const logo = data[i].logo;
             const desc = data[i].desc;
             const rating = data[i].rating;
-            const start_time = data[i].icoStart;
-            const end_time = data[i].icoEnd;
+            const dates = {
+                preicostart: data[i].dates.preIcoStart,
+                preicoend: data[i].dates.preIcoEnd,
+                icostart: data[i].dates.icoStart,
+                icoend: data[i].dates.icoEnd
+            }
+            
             const url = data[i].url;
 
             // const getLink = new Promise(function(resolve, reject) {
@@ -32,8 +37,7 @@ request("https://icobench.com/api/v1/icos/all", function(error, response, body) 
                     logo: logo,
                     desc: desc,
                     rating: rating,
-                    icostart: start_time,
-                    icoend: end_time,
+                    dates: dates,
                     platforms: links,
                     homepageurl: links.homepageurl,
                     whitepaperurl: links.whitepaperurl
@@ -48,16 +52,16 @@ request("https://icobench.com/api/v1/icos/all", function(error, response, body) 
     });
 });
 
-function getlink(resolve, url) {
-    request(url, function(error, response, html) {
-        let link = "";
-        if(html) {
-            const $ = cheerio.load(html);
-            link = $("a.button_big").attr("href");
-        }
-        resolve(link);
-    });
-}
+// function getlink(resolve, url) {
+//     request(url, function(error, response, html) {
+//         let link = "";
+//         if(html) {
+//             const $ = cheerio.load(html);
+//             link = $("a.button_big").attr("href");
+//         }
+//         resolve(link);
+//     });
+// }
 
 function getlinks(resolve, id) {
     request(`https://icobench.com/api/v1/ico/${id}`, function(error, response, body) {
