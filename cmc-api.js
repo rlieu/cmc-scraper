@@ -82,4 +82,4 @@ exports.getdata = functions.https.onRequest((req, res) => {
             });
         }
     });
-}
+});

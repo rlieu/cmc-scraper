@@ -1,17 +1,12 @@
 const cheerio = require("cheerio");
 const request = require("request");
-const ICOBench = require('node-icobench');
+// const getLink = require("./get-link");
 
-const pubKey = 'a6a7f2f2-3358-495f-af38-a869f102f495';
-const prikey = '6f14ecbf-39aa-4ca7-a2eb-70ca1b74dc4c';
-
-let icobench = new ICOBench(pubKey, prikey);
-
-icobench.icos.all().then(function(response) {
+request("https://icobench.com/api/v1/icos/all", function(error, response, body) {
+    let data = JSON.parse(body);
     let allPromises = [];
     let results = [];
-    const data = response.results;
-    console.log(response);
+    data = data.results
     for(var i in data) {
         allPromises.push(new Promise(function(resolve, reject) {
             const id = data[i].id;
@@ -27,6 +22,10 @@ icobench.icos.all().then(function(response) {
             }
             
             const url = data[i].url;
+
+            // const getLink = new Promise(function(resolve, reject) {
+            //     const link = getlink(resolve, url);
+            // })
 
             const getLink = new Promise(function(resolve, reject) {
                 const links = getlinks(resolve, id);
@@ -53,9 +52,20 @@ icobench.icos.all().then(function(response) {
     });
 });
 
+// function getlink(resolve, url) {
+//     request(url, function(error, response, html) {
+//         let link = "";
+//         if(html) {
+//             const $ = cheerio.load(html);
+//             link = $("a.button_big").attr("href");
+//         }
+//         resolve(link);
+//     });
+// }
+
 function getlinks(resolve, id) {
-    icobench.ico.profile({ico: id}).then(function(response) {
-        const data = response;
+    request(`https://icobench.com/api/v1/ico/${id}`, function(error, response, body) {
+        const data = JSON.parse(body);
         const links = {
             twitter: data.links.twitter,
             slack: data.links.slack,
